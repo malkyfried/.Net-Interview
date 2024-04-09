@@ -1,6 +1,7 @@
 # News Feed
  
 News Feed is a web application that fetches news articles from a specified RSS feed and displays them on the webpage.
+
 Users can view the list of news topics and click on individual articles to see more details.
 
 ## Features:
@@ -28,8 +29,11 @@ Users can view the list of news topics and click on individual articles to see m
 ## Getting Started:
 
 Clone the repository: git clone <repository-url>
+
 Open the solution file in Visual Studio.
+
 Build the solution to restore dependencies.
+
 Run the application and navigate to the specified URL.
 
 ## Usage:
