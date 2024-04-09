@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News Feed</title>
+    <!-- Link to external CSS file -->
     <link rel="stylesheet" href="~/css/newsStyle.css">
 </head>
 <body>
@@ -20,7 +21,8 @@
                     @foreach (var post in Model)
                     {
                         <li>
-                            <p><a href="#" onclick="showPostDetails('@post.LinkPost', '@post.Title'); return false;">@post.Title</a></p>
+                            <!-- Link to show post details with JavaScript function -->
+                            <p><a href="#" onclick="showPostDetails('@post.Id', '@post.Title','@post.LinkPost'); return false;">@post.Title</a></p>
                         </li>
                     }
                 </ul>
@@ -29,12 +31,14 @@
                 <header id="P">
                     <h4>Post</h4>
                 </header>
+                <!-- Placeholder for post title, body, and link -->
                 <h3 id="post-title"></h3>
                 <p id="post-body"></p>
                 <p id="post-link"></p>
             </aside>
         </section>
     </main>
+    <!-- Link to external JavaScript file -->
     <script src="~/js/newsScript.js"></script>
 </body>
 </html>

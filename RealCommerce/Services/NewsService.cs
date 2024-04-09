@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using RealCommerce.Models;
+﻿using RealCommerce.Models;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
@@ -7,72 +6,67 @@ namespace RealCommerce.Services
 {
     public class newsService
     {
-        private readonly HttpClient _httpClient;
+        public List<Post> newsItems { get; set; } // Property to hold news items
 
-        public newsService(HttpClient httpClient)
+        // Constructor to initialize news items from RSS
+        public newsService()
         {
-            _httpClient = httpClient;
+            GetNewsItemsFromRSS();
         }
 
-        public async Task<string> GetPostBodyAsync(string url)
+        // Method to get post body by id
+        public string GetPostBodyById(string id)
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-
-                string htmlContent = await response.Content.ReadAsStringAsync();
-
-                // Use HtmlAgilityPack to parse the HTML content
-                HtmlDocument htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(htmlContent);
-
-                // Extract only the text content from the HTML content
-                string body = htmlDocument.DocumentNode.InnerText.Trim();
-                Console.WriteLine(body);
-                return body;
+                if (newsItems != null) // Check if news items are initialized
+                {
+                    var post = newsItems.FirstOrDefault(p => p.Id == id); // Find post by id
+                    if (post != null)
+                    {
+                        return post.Body; // Return body if post found
+                    }
+                    else
+                    {
+                        return "Post not found."; // Return message if post not found
+                    }
+                }
+                else
+                {
+                    return "News items not initialized."; // Return message if news items not initialized
+                }
             }
             catch (Exception ex)
             {
-                return "Error fetching post body: " + ex.Message;
+                return "Error fetching post body: " + ex.Message; // Return error message if exception occurs
             }
         }
 
+        // Method to fetch news items from RSS feed
         public List<Post> GetNewsItemsFromRSS()
         {
-            List<Post> newsItems = new List<Post>();
+            newsItems = new List<Post>(); // Initialize news items list
 
             string rssUrl = "http://news.google.com/news?pz=1&cf=all&ned=en_il&hl=en&output=rss";
 
-            // Logic to fetch news items from RSS feed
             using (XmlReader reader = XmlReader.Create(rssUrl))
             {
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                SyndicationFeed feed = SyndicationFeed.Load(reader); // Load RSS feed
 
+                // Iterate through feed items and populate news items list
                 foreach (SyndicationItem item in feed.Items)
                 {
                     Post newsItem = new Post
                     {
+                        Id = item.Id,
                         Title = item.Title.Text,
-                        //Body = item.Summary.Text,
+                        Body = item.Summary.Text,
                         LinkPost = item.Links[0].Uri.AbsoluteUri
                     };
-                    newsItems.Add(newsItem);
+                    newsItems.Add(newsItem); // Add news item to list
                 }
             }
-
-            //Mock data for demonstration
-            //for (int i = 1; i <= 5; i++)
-            //{
-            //    Post newsItem = new Post
-            //    {
-            //        Title = $"Mock Title {i}",
-            //        Body = $"Mock Body {i}",
-            //        LinkPost = $"http://example.com/post/{i}"
-            //    };
-            //    newsItems.Add(newsItem);
-            //}
-            return newsItems;
+            return newsItems; // Return list of news items
         }
     }
 }
