@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Feed</title>
+    <link rel="stylesheet" href="~/css/newsStyle.css">
+</head>
+<body>
+    <header id="GN">
+        <h1>Google News</h1>
+    </header>
+    <main>
+        <section id="news-feed">
+            <article id="post-content">
+                <header id="T">
+                    <h4>Topics</h4>
+                </header>
+                <ul>
+                    @foreach (var post in Model)
+                    {
+                        <li>
+                            <p><a href="#" onclick="showPostDetails('@post.LinkPost', '@post.Title'); return false;">@post.Title</a></p>
+                        </li>
+                    }
+                </ul>
+            </article>
+            <aside id="post-details">
+                <header id="P">
+                    <h4>Post</h4>
+                </header>
+                <h3 id="post-title"></h3>
+                <p id="post-body"></p>
+                <p id="post-link"></p>
+            </aside>
+        </section>
+    </main>
+    <script src="~/js/newsScript.js"></script>
+</body>
+</html>
