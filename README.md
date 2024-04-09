@@ -12,10 +12,15 @@ Users can view the list of news topics and click on individual articles to see m
 ## Technologies Used:
 
 **ASP.NET Core MVC:** The project is built using ASP.NET Core MVC framework.
+
 **C#:** Backend logic and business logic are implemented in C#.
+
 **HTML/CSS/JavaScript:** Frontend development is done using HTML, CSS, and JavaScript.
+
 **SyndicationFeed:** The SyndicationFeed class from System.ServiceModel.Syndication is used to parse RSS feeds.
+
 **MemoryCache:** The MemoryCache class from Microsoft.Extensions.Caching.Memory is used to store news items in memory cache.
+
 **Visual Studio:** The project is developed using Visual Studio IDE.
 
 ## Getting Started:
